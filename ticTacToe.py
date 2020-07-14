@@ -288,7 +288,6 @@ def main():
     x_list = []
     o_list = []
     userTurn = True
-    state = 'play'
     
     while run:
         clock.tick(30) 
@@ -298,37 +297,9 @@ def main():
                 run = False
                 pygame.quit()
                 quit()
-
-            elif state == 'draw': # CHECK IF STATE IS DRAW
-                draw_drawWindow(win)
-
-            elif state == 'play':
-                if event.type == pygame.MOUSEBUTTONUP and userTurn: # CHECK FOR USERS MOVE
-                    square = get_square(pygame.mouse.get_pos())
-                    if squares[square] == 0:
-                        squares[square] = 1
-                        x = X(SQUARES_POS[square])
-                        x_list.append(x)
-                        if checkXWin(squares):
-                            print('X won')
-                        if checkForDraw(squares):
-                            state = 'draw'
-                        userTurn = False
-                elif not userTurn: # CHECK FOR USERS MOVE
-                    print('COMPUTER TURN')
-                    square = playO(squares)
-                    if squares[square] == 0:
-                        squares[square] = 2
-                        o = O(SQUARES_POS[square])
-                        o_list.append(o)
-                        if checkOWin(squares):
-                            print('O won')
-                        userTurn = True    
-                draw_playWindow(win, x_list, o_list)
-
         # Start screen
         if state == 'start':
-            clock.tick(30)
+            clock.tick(5)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # CHECK FOR QUIT
                     run = False
@@ -346,7 +317,7 @@ def main():
 
         # Gameplay
         if state == 'play':
-            clock.tick(30) 
+            clock.tick(5)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # CHECK FOR QUIT
                     run = False
@@ -377,7 +348,7 @@ def main():
 
         # Endgame screen
         if state == 'x won' or state == 'o won' or state == 'draw':
-            clock.tick(30)
+            clock.tick(5)
             tempState = state
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # CHECK FOR QUIT
